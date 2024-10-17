@@ -16,5 +16,27 @@ namespace api.Controllers
         {
             _context = context;
         }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var stocks  =_context.Stock.ToList();
+
+            return Ok(stocks);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById([FromRoute] int id) //.net use whats called Model biding to extract id string out, turn in to an int and then its going to pass it right down into our actual code
+        {
+            var stock = _context.Stock.Find(id);
+
+            if(stock == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(stock);
+        }
+
     }
 }
